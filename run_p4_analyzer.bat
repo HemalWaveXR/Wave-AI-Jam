@@ -20,7 +20,14 @@ python p4_code_analyzer.py %CHANGELIST_ID% --output %OUTPUT_FILE%
 
 if %ERRORLEVEL% EQU 0 (
     echo Analysis completed successfully.
-    start %OUTPUT_FILE%
+    
+    REM Check if the output file exists before trying to open it
+    if exist %OUTPUT_FILE% (
+        echo Opening report: %OUTPUT_FILE%
+        start %OUTPUT_FILE%
+    ) else (
+        echo WARNING: Report file %OUTPUT_FILE% was not created.
+    )
 ) else (
     echo Analysis failed. See error messages above.
     exit /b 1
